@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Mail, Code, Terminal, Layers } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import HeroIllustration from "../components/HeroIllustration";
 import projects from "../data/projects.json";
 
 const fadeInUp = {
@@ -65,24 +66,32 @@ export default function Home() {
           initial="hidden"
           animate="visible"
           variants={staggerContainer}
-          className="flex flex-col items-start w-full space-y-8"
+          className="flex flex-col-reverse lg:flex-row items-center justify-between w-full gap-12 lg:gap-8 pt-20 lg:pt-0"
         >
-          <motion.div variants={fadeInUp} className="space-y-4">
-            <h2 className="text-zinc-400 font-mono tracking-widest text-sm uppercase">Peshimam Amaan</h2>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-normal leading-tight text-white font-[family-name:var(--font-tech)]">
-              Software Engineer, <br/> a full stack developer.
-            </h1>
-          </motion.div>
-          
-          <motion.p variants={fadeInUp} className="max-w-xl text-lg sm:text-xl text-zinc-400 leading-relaxed font-light">
-            I'm Amaan, I craft responsive, high-performance web applications with a strong focus on minimal design, robust backend architectures, and AI integrations.
-          </motion.p>
-          
-          <motion.div variants={fadeInUp} className="flex space-x-6 pt-4">
-            <Link href="#contact" className="group flex items-center space-x-2 text-white hover:text-zinc-300 transition-colors">
-              <span>Let's talk</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
+          {/* Text Content */}
+          <div className="flex flex-col items-start w-full lg:w-3/5 space-y-8">
+            <motion.div variants={fadeInUp} className="space-y-4">
+              <h2 className="text-zinc-400 font-mono tracking-widest text-sm uppercase">Peshimam Amaan</h2>
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-normal leading-tight text-white font-[family-name:var(--font-tech)]">
+                Software Engineer, <br/> a full stack developer.
+              </h1>
+            </motion.div>
+            
+            <motion.p variants={fadeInUp} className="max-w-xl text-lg sm:text-xl text-zinc-400 leading-relaxed font-light">
+              I'm Amaan, I craft responsive, high-performance web applications with a strong focus on minimal design, robust backend architectures, and AI integrations.
+            </motion.p>
+            
+            <motion.div variants={fadeInUp} className="flex space-x-6 pt-4">
+              <Link href="#contact" className="group flex items-center space-x-2 text-white hover:text-zinc-300 transition-colors">
+                <span>Let's talk</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </motion.div>
+          </div>
+
+          {/* Illustration */}
+          <motion.div variants={fadeInUp} className="w-full lg:w-2/5 flex justify-center lg:justify-end mt-12 lg:mt-0">
+            <HeroIllustration />
           </motion.div>
         </motion.div>
         
