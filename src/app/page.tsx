@@ -222,39 +222,47 @@ export default function Home() {
           variants={staggerContainer}
           className="space-y-16 w-full"
         >
-          <motion.div variants={fadeInUp} className="flex justify-between items-end">
+          <motion.div variants={fadeInUp} className="flex justify-between items-center sm:items-end">
             <h2 className="text-3xl sm:text-4xl font-semibold tracking-normal font-[family-name:var(--font-tech)]">Selected Work</h2>
+            <Link 
+              href="/projects" 
+              className="group flex items-center space-x-2 text-sm sm:text-base text-zinc-400 hover:text-white transition-colors"
+            >
+              <span>View all</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
           </motion.div>
           
-          <div className="space-y-24">
+          <div className="flex overflow-x-auto snap-x snap-mandatory gap-8 pb-8 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             {projects.map((project) => (
-              <motion.div key={project.id} variants={fadeInUp} className="group relative w-full flex flex-col space-y-6">
-                <div className="w-full aspect-[16/9] bg-zinc-900 rounded-lg overflow-hidden relative border border-zinc-800 group-hover:border-zinc-500 transition-colors duration-500">
+              <motion.div key={project.id} variants={fadeInUp} className="snap-start shrink-0 w-[80vw] sm:w-[360px] md:w-[400px] lg:w-[420px] group relative bg-zinc-950 border border-white/[0.09] hover:border-white/[0.25] transition-colors duration-300 rounded overflow-hidden flex flex-col">
+                <div className="w-full aspect-[16/9] bg-[#252525] overflow-hidden relative">
                   <Image 
                     src={project.imageUrl}
                     alt={project.title}
                     fill
-                    className="object-cover opacity-70 group-hover:opacity-100 transition-opacity duration-500"
+                    className="object-cover opacity-60 grayscale-[0.4] group-hover:opacity-90 group-hover:scale-[1.04] transition-all duration-700"
                   />
                 </div>
-                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
-                  <div>
-                    <h3 className="text-2xl font-medium text-white tracking-normal font-[family-name:var(--font-tech)] mb-2">{project.title}</h3>
-                    <p className="text-zinc-400 max-w-md">{project.description}</p>
-                  </div>
-                  <div className="flex items-center gap-6 shrink-0 pt-2 sm:pt-0">
-                    <Link href={project.sourceCodeUrl} target="_blank" className="text-sm text-zinc-400 hover:text-white transition-colors font-medium">
+                <div className="flex flex-col p-6 flex-grow">
+                  <h3 className="text-xl sm:text-2xl font-medium text-[#f0f0ee] tracking-normal font-[family-name:var(--font-tech)] mb-2">{project.title}</h3>
+                  <p className="text-[#a2a29e] text-sm leading-relaxed mb-6 flex-grow">{project.description}</p>
+                  
+                  <div className="flex items-center gap-6 mt-auto">
+                    <Link href={project.sourceCodeUrl} target="_blank" className="text-sm text-[#a2a29e] hover:text-white transition-colors font-medium">
                       Source Code
                     </Link>
-                    <Link href={project.liveDemoUrl} target="_blank" className="flex items-center space-x-2 text-sm text-white hover:text-zinc-300 transition-colors group font-medium">
+                    <Link href={project.liveDemoUrl} target="_blank" className="flex items-center space-x-2 text-sm text-[#f0f0ee] hover:text-white transition-colors group/link font-medium">
                       <span>Live Demo</span>
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
                     </Link>
                   </div>
                 </div>
               </motion.div>
             ))}
           </div>
+
+
         </motion.div>
       </section>
 
