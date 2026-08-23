@@ -1,0 +1,26 @@
+[
+  {
+    "id": "rag-chat",
+    "title": "RAG-Based Document Q&A",
+    "description": "A full-stack RAG system with semantic search over text embeddings, supporting Google Drive OAuth and persistent chat history. Built with React, FastAPI, pgvector, and Gemini API.",
+    "imageUrl": "/rag-chat.png",
+    "sourceCodeUrl": "https://github.com/amaan6498",
+    "liveDemoUrl": "#"
+  },
+  {
+    "id": "worklog-ai",
+    "title": "Worklog AI",
+    "description": "Productivity tracking platform featuring LLM-powered summaries, JWT authentication, and automated CI/CD pipelines. Developed with Node.js, Express, MongoDB, and OpenAI APIs.",
+    "imageUrl": "/worklog-ai.png",
+    "sourceCodeUrl": "https://github.com/amaan6498/worklogai",
+    "liveDemoUrl": "https://worklogai.vercel.app/"
+  },
+  {
+    "id": "ats-validator",
+    "title": "ATS Resume Validator",
+    "description": "A 3-tier architecture tool that parses resumes to score keyword alignment and identify skill gaps in under 3 seconds using the Hugging Face Inference API.",
+    "imageUrl": "/ats-validator.png",
+    "sourceCodeUrl": "https://github.com/amaan6498/ats-client",
+    "liveDemoUrl": "https://ats-client-zeta.vercel.app/"
+  }
+]
