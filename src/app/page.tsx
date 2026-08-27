@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Mail, Code, Terminal, Layers, Download } from "lucide-react";
 import Link from "next/link";
@@ -28,6 +28,12 @@ export default function Home() {
   const [showIntro, setShowIntro] = useState(true);
   const [activeProject, setActiveProject] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.innerWidth < 768) {
+      setShowIntro(false);
+    }
+  }, []);
 
   const handleScroll = () => {
     if (scrollContainerRef.current) {
@@ -90,7 +96,7 @@ export default function Home() {
       <div className="fixed inset-0 h-screen w-screen bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none z-0"></div>
 
       {/* Hero Section */}
-      <section className="relative z-10 flex flex-col items-center justify-center min-h-screen w-full max-w-6xl px-12 sm:px-20 lg:px-32">
+      <section className="relative z-10 flex flex-col items-center justify-center min-h-screen w-full max-w-6xl px-6 sm:px-12 md:px-20 lg:px-32">
         <motion.div 
           initial="hidden"
           animate="visible"
@@ -128,7 +134,7 @@ export default function Home() {
           </div>
 
           {/* Illustration */}
-          <motion.div variants={fadeInUp} className="w-full lg:w-2/5 flex justify-center lg:justify-end mt-12 lg:mt-0">
+          <motion.div variants={fadeInUp} className="hidden lg:flex w-full lg:w-2/5 justify-end mt-12 lg:mt-0">
             <HeroIllustration />
           </motion.div>
         </motion.div>
@@ -136,7 +142,7 @@ export default function Home() {
       </section>
 
       {/* Skills Section */}
-      <section className="relative z-10 flex flex-col justify-center min-h-screen w-full max-w-6xl px-12 sm:px-20 lg:px-32 py-24">
+      <section className="relative z-10 flex flex-col justify-center min-h-screen w-full max-w-6xl px-6 sm:px-12 md:px-20 lg:px-32 py-24">
         <motion.div 
           initial="hidden"
           whileInView="visible"
@@ -155,7 +161,7 @@ export default function Home() {
       </section>
 
       {/* Experience Section */}
-      <section className="relative z-10 flex flex-col justify-center min-h-screen w-full max-w-6xl px-12 sm:px-20 lg:px-32 py-24 border-t border-zinc-900">
+      <section className="relative z-10 flex flex-col justify-center min-h-screen w-full max-w-6xl px-6 sm:px-12 md:px-20 lg:px-32 py-24 border-t border-zinc-900">
         <motion.div 
           initial="hidden"
           whileInView="visible"
@@ -200,7 +206,7 @@ export default function Home() {
       </section>
 
       {/* Featured Projects */}
-      <section className="relative z-10 flex flex-col justify-center min-h-screen w-full max-w-6xl px-12 sm:px-20 lg:px-32 py-24 border-t border-zinc-900">
+      <section className="relative z-10 flex flex-col justify-center min-h-screen w-full max-w-6xl px-6 sm:px-12 md:px-20 lg:px-32 py-24 border-t border-zinc-900">
         <motion.div 
           initial="hidden"
           whileInView="visible"
@@ -275,7 +281,7 @@ export default function Home() {
       </section>
 
       {/* Footer / Contact */}
-      <section id="contact" className="relative z-10 flex flex-col justify-center min-h-[50vh] w-full max-w-6xl px-12 sm:px-20 lg:px-32 py-24 border-t border-zinc-900">
+      <section id="contact" className="relative z-10 flex flex-col justify-center min-h-[50vh] w-full max-w-6xl px-6 sm:px-12 md:px-20 lg:px-32 py-24 border-t border-zinc-900">
         <motion.div 
           initial="hidden"
           whileInView="visible"
