@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Mail, Code, Terminal, Layers } from "lucide-react";
+import { ArrowRight, Mail, Code, Terminal, Layers, Download } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import HeroIllustration from "../components/HeroIllustration";
+import TerminalSkills from "../components/TerminalSkills";
 import projects from "../data/projects.json";
 
 const fadeInUp = {
@@ -25,6 +26,34 @@ const staggerContainer = {
 
 export default function Home() {
   const [showIntro, setShowIntro] = useState(true);
+  const [activeProject, setActiveProject] = useState(0);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const handleScroll = () => {
+    if (scrollContainerRef.current) {
+      const scrollPosition = scrollContainerRef.current.scrollLeft;
+      const firstChild = scrollContainerRef.current.firstChild as HTMLElement;
+      if (firstChild) {
+        const itemWidth = firstChild.offsetWidth + 32; // item width + 32px gap
+        const index = Math.round(scrollPosition / itemWidth);
+        setActiveProject(Math.min(Math.max(index, 0), projects.length - 1));
+      }
+    }
+  };
+
+  const scrollToProject = (index: number) => {
+    if (scrollContainerRef.current) {
+      const firstChild = scrollContainerRef.current.firstChild as HTMLElement;
+      if (firstChild) {
+        const itemWidth = firstChild.offsetWidth + 32;
+        scrollContainerRef.current.scrollTo({
+          left: index * itemWidth,
+          behavior: 'smooth'
+        });
+        setActiveProject(index);
+      }
+    }
+  };
 
   return (
     <AnimatePresence mode="wait">
@@ -81,11 +110,20 @@ export default function Home() {
               I'm Amaan, I craft responsive, high-performance web applications with a strong focus on minimal design, robust backend architectures, and AI integrations.
             </motion.p>
             
-            <motion.div variants={fadeInUp} className="flex space-x-6 pt-4">
+            <motion.div variants={fadeInUp} className="flex items-center space-x-8 pt-4">
               <Link href="#contact" className="group flex items-center space-x-2 text-white hover:text-zinc-300 transition-colors">
                 <span>Let's talk</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
+              <a 
+                href="/resume.pdf" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center space-x-2 text-zinc-400 hover:text-white transition-colors"
+              >
+                <span>Resume</span>
+                <Download className="w-4 h-4 group-hover:-translate-y-1 transition-transform" />
+              </a>
             </motion.div>
           </div>
 
@@ -110,61 +148,9 @@ export default function Home() {
             <h2 className="text-3xl sm:text-4xl font-semibold tracking-normal font-[family-name:var(--font-tech)]">Skills</h2>
           </motion.div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-12">
-            <motion.div variants={fadeInUp} className="space-y-4">
-              <h3 className="text-xl font-medium text-white tracking-normal font-[family-name:var(--font-tech)]">Languages</h3>
-              <div className="flex flex-wrap gap-2">
-                {["HTML", "CSS", "C", "JavaScript (ES6+)", "TypeScript", "Python", "SQL"].map(skill => (
-                  <span key={skill} className="px-3 py-1.5 bg-zinc-900/50 border border-zinc-800 rounded-full text-sm text-zinc-300 hover:border-zinc-600 hover:text-white transition-colors">{skill}</span>
-                ))}
-              </div>
-            </motion.div>
-            
-            <motion.div variants={fadeInUp} className="space-y-4">
-              <h3 className="text-xl font-medium text-white tracking-normal font-[family-name:var(--font-tech)]">Frontend</h3>
-              <div className="flex flex-wrap gap-2">
-                {["React.js", "Tailwind CSS", "ShadCN UI", "Bootstrap", "Zustand", "Zod"].map(skill => (
-                  <span key={skill} className="px-3 py-1.5 bg-zinc-900/50 border border-zinc-800 rounded-full text-sm text-zinc-300 hover:border-zinc-600 hover:text-white transition-colors">{skill}</span>
-                ))}
-              </div>
-            </motion.div>
-            
-            <motion.div variants={fadeInUp} className="space-y-4">
-              <h3 className="text-xl font-medium text-white tracking-normal font-[family-name:var(--font-tech)]">Backend</h3>
-              <div className="flex flex-wrap gap-2">
-                {["Node.js", "Express.js", "FastAPI", "NestJS", "RESTful APIs", "GraphQL", "Pydantic"].map(skill => (
-                  <span key={skill} className="px-3 py-1.5 bg-zinc-900/50 border border-zinc-800 rounded-full text-sm text-zinc-300 hover:border-zinc-600 hover:text-white transition-colors">{skill}</span>
-                ))}
-              </div>
-            </motion.div>
-            
-            <motion.div variants={fadeInUp} className="space-y-4">
-              <h3 className="text-xl font-medium text-white tracking-normal font-[family-name:var(--font-tech)]">Databases</h3>
-              <div className="flex flex-wrap gap-2">
-                {["PostgreSQL", "MySQL", "MongoDB", "pgvector"].map(skill => (
-                  <span key={skill} className="px-3 py-1.5 bg-zinc-900/50 border border-zinc-800 rounded-full text-sm text-zinc-300 hover:border-zinc-600 hover:text-white transition-colors">{skill}</span>
-                ))}
-              </div>
-            </motion.div>
-
-            <motion.div variants={fadeInUp} className="space-y-4">
-              <h3 className="text-xl font-medium text-white tracking-normal font-[family-name:var(--font-tech)]">AI</h3>
-              <div className="flex flex-wrap gap-2">
-                {["RAG Architecture", "Text Embeddings", "Semantic Search", "Gemini API", "Hugging Face Inference"].map(skill => (
-                  <span key={skill} className="px-3 py-1.5 bg-zinc-900/50 border border-zinc-800 rounded-full text-sm text-zinc-300 hover:border-zinc-600 hover:text-white transition-colors">{skill}</span>
-                ))}
-              </div>
-            </motion.div>
-
-            <motion.div variants={fadeInUp} className="space-y-4">
-              <h3 className="text-xl font-medium text-white tracking-normal font-[family-name:var(--font-tech)]">Tools & Testing</h3>
-              <div className="flex flex-wrap gap-2">
-                {["Git", "GitHub", "Vercel", "VTEX IO", "Jest", "CI/CD", "Postman"].map(skill => (
-                  <span key={skill} className="px-3 py-1.5 bg-zinc-900/50 border border-zinc-800 rounded-full text-sm text-zinc-300 hover:border-zinc-600 hover:text-white transition-colors">{skill}</span>
-                ))}
-              </div>
-            </motion.div>
-          </div>
+          <motion.div variants={fadeInUp}>
+            <TerminalSkills />
+          </motion.div>
         </motion.div>
       </section>
 
@@ -222,46 +208,68 @@ export default function Home() {
           variants={staggerContainer}
           className="space-y-16 w-full"
         >
-          <motion.div variants={fadeInUp} className="flex justify-between items-center sm:items-end">
-            <h2 className="text-3xl sm:text-4xl font-semibold tracking-normal font-[family-name:var(--font-tech)]">Selected Work</h2>
+          <motion.div variants={fadeInUp} className="flex justify-between items-end">
+            <div>
+              <h2 className="text-3xl sm:text-4xl font-semibold tracking-normal font-[family-name:var(--font-tech)]">Selected Work</h2>
+            </div>
             <Link 
               href="/projects" 
-              className="group flex items-center space-x-2 text-sm sm:text-base text-zinc-400 hover:text-white transition-colors"
+              className="group flex items-center space-x-2 text-sm sm:text-base text-zinc-400 hover:text-white transition-colors mb-1"
             >
               <span>View all</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </motion.div>
           
-          <div className="flex overflow-x-auto snap-x snap-mandatory gap-8 pb-8 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-            {projects.map((project) => (
-              <motion.div key={project.id} variants={fadeInUp} className="snap-start shrink-0 w-[80vw] sm:w-[360px] md:w-[400px] lg:w-[420px] group relative bg-zinc-950 border border-white/[0.09] hover:border-white/[0.25] transition-colors duration-300 rounded overflow-hidden flex flex-col">
-                <div className="w-full aspect-[16/9] bg-[#252525] overflow-hidden relative">
-                  <Image 
-                    src={project.imageUrl}
-                    alt={project.title}
-                    fill
-                    className="object-cover opacity-60 grayscale-[0.4] group-hover:opacity-90 group-hover:scale-[1.04] transition-all duration-700"
-                  />
-                </div>
-                <div className="flex flex-col p-6 flex-grow">
-                  <h3 className="text-xl sm:text-2xl font-medium text-[#f0f0ee] tracking-normal font-[family-name:var(--font-tech)] mb-2">{project.title}</h3>
-                  <p className="text-[#a2a29e] text-sm leading-relaxed mb-6 flex-grow">{project.description}</p>
-                  
-                  <div className="flex items-center gap-6 mt-auto">
-                    <Link href={project.sourceCodeUrl} target="_blank" className="text-sm text-[#a2a29e] hover:text-white transition-colors font-medium">
-                      Source Code
-                    </Link>
-                    <Link href={project.liveDemoUrl} target="_blank" className="flex items-center space-x-2 text-sm text-[#f0f0ee] hover:text-white transition-colors group/link font-medium">
-                      <span>Live Demo</span>
-                      <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
-                    </Link>
+          <motion.div variants={fadeInUp} className="w-full">
+            <div 
+              ref={scrollContainerRef}
+              onScroll={handleScroll}
+              className="flex overflow-x-auto snap-x snap-mandatory gap-8 pb-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+            >
+              {projects.map((project) => (
+                <div key={project.id} className="snap-start shrink-0 w-[80vw] sm:w-[360px] md:w-[400px] lg:w-[420px] group relative bg-zinc-950 border border-white/[0.09] hover:border-white/[0.25] transition-colors duration-300 rounded overflow-hidden flex flex-col">
+                  <div className="w-full aspect-[16/9] bg-[#252525] overflow-hidden relative">
+                    <Image 
+                      src={project.imageUrl}
+                      alt={project.title}
+                      fill
+                      className="object-cover opacity-60 grayscale-[0.4] group-hover:opacity-90 group-hover:scale-[1.04] transition-all duration-700"
+                    />
+                  </div>
+                  <div className="flex flex-col p-6 flex-grow">
+                    <h3 className="text-xl sm:text-2xl font-medium text-[#f0f0ee] tracking-normal font-[family-name:var(--font-tech)] mb-2">{project.title}</h3>
+                    <p className="text-[#a2a29e] text-sm leading-relaxed mb-6 flex-grow">{project.description}</p>
+                    
+                    <div className="flex items-center gap-6 mt-auto">
+                      <Link href={project.sourceCodeUrl} target="_blank" className="text-sm text-[#a2a29e] hover:text-white transition-colors font-medium">
+                        Source Code
+                      </Link>
+                      <Link href={project.liveDemoUrl} target="_blank" className="flex items-center space-x-2 text-sm text-[#f0f0ee] hover:text-white transition-colors group/link font-medium">
+                        <span>Live Demo</span>
+                        <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+                      </Link>
+                    </div>
                   </div>
                 </div>
-              </motion.div>
-            ))}
-          </div>
+              ))}
+            </div>
 
+            <div className="flex justify-center items-center space-x-2 mt-8">
+              {projects.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => scrollToProject(index)}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    activeProject === index 
+                      ? "bg-zinc-300 w-6" 
+                      : "bg-zinc-600 w-2 hover:bg-zinc-500"
+                  }`}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
+            </div>
+          </motion.div>
 
         </motion.div>
       </section>
